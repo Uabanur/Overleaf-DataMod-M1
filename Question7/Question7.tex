@@ -1,0 +1,7 @@
+\section*{Question 7}
+
+The overlap of the two languages, is found by creating the intersection product of the automata $\mathbf{M}$ and $\mathbf{T}$, and checking if there exists a path from the initial state to a final state. The process is similar to creating $\mathbf{T}$ from $\mathbf{P_1}$ and $\mathbf{P_2}$. The initial state of the product, is a tuple of the initial states of $\mathbf{M}$ and $\mathbf{T}$: $\{p_0, \{\mathrm{q_1, q_1}\}\}$. The final states are all states where both $\mathbf{M}$ and $\mathbf{T}$ are in a final state. The resulting final state machine, composed of reachable states from $\mathbf{M \times T}$ (and final states) is seen in figure \ref{fig:MxT}.
+
+\input{Question7/MxTtikz.tex}
+
+As seen in figure \ref{fig:MxT}, there exists no path from the initial state to a final state. This proofs that the Bakery Algorithm is correct.

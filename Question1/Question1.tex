@@ -1,0 +1,7 @@
+\section*{Question 1}
+
+For the variables $x_1$ and $x_2$ to be arbitrarily large, the variables must not be reset to zero without incrementing the other variable first. Since steps $a_1$ and $a_2$ increments the corresponding $x_i$ variables, an example of the sequence is:
+\begin{gather*}
+    \mathsf{a}_1\mathsf{a}_2 \: \mathsf{b}_1\mathsf{c}_1\mathsf{a}_1 \: \mathsf{b}_2\mathsf{c}_2\mathsf{a}_2 \: \mathsf{b}_1\mathsf{c}_1\mathsf{a}_1 \: \mathsf{b}_2\mathsf{c}_2\mathsf{a}_2 ...
+\end{gather*}
+Looping the symbols $\mathsf{b}_i \mathsf{c}_i \mathsf{a}_i$ for each process insures that the corresponding $x_i$ variable gets incremented before the other variable/variables resets. 

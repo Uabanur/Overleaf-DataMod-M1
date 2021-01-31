@@ -1,0 +1,7 @@
+\section*{Question 5}
+
+Since the Baker Algorithm only lets a process into the critical state if it's variables passes the test ($b_1$, or $b_2$) any run of the Bakery algorithm which does not fail any test will be accepted by $\mathbf{M}$. Since $\mathbf{M}$ accepts all string which does not fail a test. 
+
+An example of a string $u \in \mathcal{L} (\mathbf{M})$ which does not correspond to a run of the Bakery Algorithm, could be $u = a_1a_1$, since $\mathbf{M}$ does not require a specific input order (unlike $\mathbf{T}$ and the Bakery Algorithm). 
+
+The string $w = a_1b_1a_2b_2$, from question 3, is not accepted in $\mathbf{M}$ since $\hat{\delta}_{\mathbf{M}}(p_0, a_1b_1a_2) = p_4$ and from here $\delta_\mathbf{M}(p_4, b_2) = D$. This string is not accepted by $\mathbf{M}$ because it fails the test $b_2$. 

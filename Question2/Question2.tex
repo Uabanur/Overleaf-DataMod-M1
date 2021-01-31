@@ -1,0 +1,60 @@
+\section*{Question 2}
+Extending $\mathbf{P_1}$ and $\mathbf{P_2}$ to work on the full alphabet $\Sigma$ we get the non-deterministic finite automata seen in figure \ref{fig:P1P2}.
+
+\vspace{1 cm}
+\input{Question2/ExtendedP.tex}
+
+From these NFA’s we construct their intersection product $\mathbf{T}$. In order to make $\mathbf{T}$ deterministic, we add a state $D$ which acts as the dead state. All input symbols that would make either $\mathbf{P_1}$ or $\mathbf{P_2}$ stuck has an edge to $D$. $D$ has edges to itself for all symbols in the alphabet and is not a final state. 
+
+The states in $\mathbf{T}$ will be shown as tuples of the respective states in the two NFA’s $\{q_{\mathbf{P_1}} , q_{\mathbf{P_2}} \}$. $\mathbf{T}$ can be represented with a transition function table calculated from the transition functions of $\mathbf{P_1}$ and $\mathbf{P_2}$. $\mathbf{T}$’s transition function is:
+\begin{gather*}
+    \delta_{\mathbf{T}}(\{q_{\mathbf{P_1}}, q_{\mathbf{P_2}}\}, \mathrm{a}) = \delta_\mathbf{P_1}(q_{\mathbf{P_1}}, \mathrm{a}) \cup \delta_\mathbf{P_2}(q_{\mathbf{P_2}}, \mathrm{a}) \\ 
+    \hat{\delta}_{\mathbf{T}}(\{q_{\mathbf{P_1}}, q_{\mathbf{P_2}}\}, \mathrm{w}) = \hat{\delta}_\mathbf{P_1}(q_{\mathbf{P_1}}, \mathrm{w}) \cup \hat{\delta}_\mathbf{P_2}(q_{\mathbf{P_2}}, \mathrm{w})
+\end{gather*} 
+\quad for any symbol $\mathrm{a} \in \Sigma$, $\mathrm{w} \in \Sigma^*$ and states $\{q_{\mathbf{P_1}}, q_{\mathbf{P_2}}\}$, where $q_{\mathbf{P_1}} \in \mathbf{Q_{P_1}}$ and $q_{\mathbf{P_2}} \in \mathbf{Q_{P_2}}$. 
+
+Using this, we can create the transition function table for $\mathbf{T}$ as seen in table \ref{tab:Tt}.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c||c|c|c|c|c|c|}
+    \hline
+    $\delta_{\mathbf{T}}$    & $\mathrm{a_1}$    &   $\mathrm{b_1}$   &    $\mathrm{c_1}$  &   $\mathrm{a_2}$   &   $\mathrm{b_2}$   &   $\mathrm{c_2}$ \\ \hline \hline
+         
+    $D$   & $D$     & $D$  & $D$    & $D$   & $D$   & $D$   \\ \hline
+    
+    $\rightarrow \{q_1, q_1\}$& $\{q_2, q_1\}$     & $D$  & $D$    & $\{q_1, q_2\}$   & $D$   & $D$   \\ \hline
+    
+    $\{q_1, q_2\}$  & $\{q_2, q_2\}$    & $D$   & $D$   & $D$   & $\{q_1, q_3\}$    & $D$   \\ \hline
+   
+    $\{q_1, q_3\}$  &   $\{q_2, q_3\}$  &   $D$ &   $D$ &   $D$ &   $D$ &   $\{q_1, q_1\}$  \\ \hline
+   
+    $\{q_2, q_1\}$  &   $D$ &   $\{q_3, q_1\}$  &   $D$ &   $\{q_2, q_2\}$  &   $D$ &   $D$ \\ \hline
+   
+    $\{q_2, q_2\}$  &   $D$ &   $\{q_3, q_2\}$  &   $D$ &   $D$ &   $\{q_2, q_3\}$  &   $D$ \\ \hline
+   
+    $\{q_2, q_3\}$  &   $D$ &   $\{q_3, q_3\}$  &   $D$ &   $D$ &   $D$ &   $\{q_2, q_1\}$  \\ \hline
+   
+    $\{q_3, q_1\}$  &   $D$ &   $D$ &   $\{q_1, q_1\}$  &   $\{q_3, q_2\}$  &   $D$ &   $D$ \\ \hline
+   
+    $\{q_3, q_2\}$  &   $D$ &   $D$ &   $\{q_1, q_2\}$  &   $D$ &   $\{q_3, q_3\}$  &   $D$ \\ \hline
+    
+    $*\{q_3, q_3\}$ &   $D$ &   $D$ &   $\{q_1, q_3\}$  &   $D$ &   $D$ &   $\{q_3, q_1\}$  \\ \hline
+    
+    
+    \end{tabular}
+    \caption{Transition functions for $\mathbf{T}$.}
+    \label{tab:Tt}
+\end{table}
+
+As shown in table \ref{tab:Tt}, there are quite a lot of ways to end in state $D$, from where it is impossible to get to a final state. The final state for $\mathbf{T}$ is defined as:
+\begin{gather*}
+    F_{\mathbf{T}} = \{F_{\mathbf{P_1}}, F_{\mathbf{P_2}}\}
+\end{gather*}
+Meaning that the only final state for $\mathbf{T}$ is $\{q_3,q_3\}$. In the same manner, the initial state is given by a tuple of the initial states from $\mathbf{P_1}$ and $\mathbf{P_2}$, meaning that the initial state for $\mathbf{T}$ is $\{q_1, q_1\}$. 
+
+The finite state machine for $\mathbf{T}$ is shown in figure \ref{fig:T}. The figure does not include all edges to the dead state $D$. All edges to $D$ can be seen in table \ref{tab:Tt}.
+
+\input{Question2/Ttikz.tex}
+
+The reason for this specific construction of $\mathbf{T}$ lies in the principle of the model checking method. By creating an intersection of $\mathbf{P_1}$ and $\mathbf{P_2}$ the \textit{single} final state of $\mathbf{T}$ now represents a key point in the Bakery algorithm that needs checking - that is, when both processes are in their critical section. Combined with the properties of the algorithm, this model's final state should ideally not be reachable. 

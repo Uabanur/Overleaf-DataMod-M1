@@ -1,0 +1,62 @@
+\section*{Question 4}
+
+%The deterministic finite automaton $\mathbf{M}$ is specified by checking all possible transitions. The transitions depend on the properties of $x_1$ and $x_2$ from the original processes given. For convenience, the actions shown in the original processes are listed in table \ref{tab:actions}.
+
+The finite automaton $\mathbf{M}$ is now constructed. For convenience, the actions shown in the original processes are listed in table \ref{tab:actions}.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cl}
+    
+    $a_1$:   &   $x_1 := x_2 + 1$   \vspace{2 mm}\\
+    $b_1$:   &   $x_1 < x_2 \vee x_2 == 0$ \vspace{2 mm}\\
+    $c_1$:   &   $x_1 := 0 $ \vspace{2 mm}\\
+    $a_2$:   &   $x_2 := x_1 + 1$ \vspace{2 mm}\\
+    $b_2$:   &   $x_2 < x_1 \vee x_1 == 0 $ \vspace{2 mm}\\
+    $c_2$:   &   $x_2 := 0$ \\ 
+    \end{tabular}
+    \caption{Actions in processes. Special symbols meaning: "$:=$" assign value, "$==$" test equality.}
+    \label{tab:actions}
+\end{table}
+
+
+The states of $\mathbf{M}$ define the the relation of properties between $x_1$ and $x_2$, and edges define possible actions. Table \ref{tab:actions} shows that $x_1$ and $x_2$ only store the same value in the special case of $x_1 = x_2 = 0$. This state is set as the initial state, since the variables start with these values. All states are seen in table \ref{tab:Mstates}. 
+
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cl}
+    $p_0$:   &   $x_1 == 0 \land x_2 == 0$   \vspace{2 mm}\\
+    $p_1$:   &   $x_1 > x_2 \land x_2 == 0$ \vspace{2 mm}\\
+    $p_2$:   &   $x_1 < x_2 \land x_1 == 0 $ \vspace{2 mm}\\
+    $p_3$:   &   $x_1 > x_2$ \vspace{2 mm}\\
+    $p_4$:   &   $x_1 < x_2$ \\
+    \end{tabular}
+    \caption{States for $\mathbf{M}$ composed of variable properties (without the dead state). Possible relations are: 1) both zero \{$p_0$\}, 2) one is zero and other is positive \{$p_1$,  $p_2$\} and 3) one is larger than the other \{$p_3$, $p_4$\}.  }
+    \label{tab:Mstates}
+\end{table}
+
+The transition function table, describing all edges of $\mathbf{M}$, is created from each state and action. If a test ($b_1$ or $b_2$) does not evaluate to true, the automaton cannot accept the string. Similar to the construction of $\mathbf{T}$, this is implemented with a dead state $D$. The complete transition function table is seen on table \ref{tab:Mt}.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c||c|c|c|c|c|c|}
+    \hline
+    $\delta_{\mathbf{M}}$   &   $a_1$   &   $b_1$   &   $c_1$   &   $a_2$   &   $b_2$   &   $c_2$   \\  \hline \hline
+    $D$ &   $D$ &   $D$ &   $D$ &   $D$ &   $D$ &   $D$ \\ \hline
+    $\rightarrow *p_0$   &   $p_1$   &   $p_0$   &   $p_0$   &   $p_2$   &   $p_0$   &   $p_0$   \\  \hline
+    $*p_1$   &   $p_1$   &   $p_1$   &   $p_0$   &   $p_4$   &   $p_1$   &   $p_1$   \\  \hline   
+    $*p_2$   &   $p_3$   &   $p_2$   &   $p_2$   &   $p_2$   &   $p_2$   &   $p_0$   \\  \hline
+    $*p_3$   &   $p_3$   &   $D$   &   $p_2$   &   $p_4$   &   $p_3$   &   $p_1$   \\  \hline
+    $*p_4$   &   $p_3$   &   $p_4$   &   $p_2$   &   $p_4$   &   $D$   &   $p_1$   \\  \hline
+    \end{tabular}
+    \caption{Transition function table for $\mathbf{M}$.}
+    \label{tab:Mt}
+\end{table}
+ The final state machine is constructed from the transition function, and can be seen in figure \ref{fig:M}.
+
+\input{Question4/Mtikz.tex}
+
+The final states for $\mathbf{M}$ are all states where the properties of the variables has not failed a test. The state where this is not the case, is if a test has evaluated to false. A test evaluating to false is equivalent to a processes trying to access the critical section without permission. Since this automaton's purpose is to validate the properties of the variables, it only accepts strings which does not attempt to access the critical section without permission. 
+
+One could argue that $p_0$ should not be a final state, since neither of the two processes are able to be in the critical state at this point. But since the main goal is to validate the Bakers Algorithm and keep the two processes from entering the critical state at the same time, it seems appropriate to accept a string which ends with both processes in their initial states. 

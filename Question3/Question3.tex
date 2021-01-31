@@ -1,0 +1,18 @@
+\section*{Question 3}
+
+If a string $\mathrm{w} \in \Sigma^*$ is accepted by both processes:
+\begin{gather*}
+    \hat{\delta}_{\mathbf{P_1}}(q_1, \mathrm{w}) = F_{\mathbf{P_1}} \\
+    \hat{\delta}_{\mathbf{P_2}}(q_1, \mathrm{w}) = F_{\mathbf{P_2}}
+\end{gather*}
+then using how the transition function for $\mathbf{T}$ is defined, we get:
+\begin{gather*}
+    \hat{\delta}_{\mathbf{T}}(\{q_1, q_1\}, \mathrm{w}) = \hat{\delta}_{\mathbf{P_1}}(q_1, \mathrm{w}) \cup \hat{\delta}_{\mathbf{P_2}}(q_1, \mathrm{w}) = \{F_{\mathbf{P_1}}, F_{\mathbf{P_2}}\}
+\end{gather*}
+Since $\{F_{\mathbf{P_1}}, F_{\mathbf{P_2}}\}$ was the definition of the final state for $\mathbf{T}$ (which in this case is $\{q_3, q_3\}$), any string which cause both processes to be in their critical section will also be accepted by $\mathbf{T}$.
+
+An example of a string which is accepted by $\mathbf{T}$ is:
+\begin{gather*}
+   \mathrm{w} = a_1 b_1 \: a_2 b_2
+\end{gather*}
+Checking the string with figure \ref{fig:P1P2} and \ref{fig:T} we see that all the finite automata accept the string.

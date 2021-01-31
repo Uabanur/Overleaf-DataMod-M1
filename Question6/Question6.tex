@@ -1,0 +1,7 @@
+\section*{Question 6}
+
+Building the two automata was fun, but the big question is: Do their languages overlap?
+\begin{gather*}
+    \mathcal{L}(\mathbf{T}) \cap \mathcal{L}(\mathbf{M}) = \emptyset?
+\end{gather*}
+$\mathbf{T}$ accepts all string which result in both process being in the critical state, and $\mathbf{M}$ accepts all strings which passes all tests of the properties of the variables $x_1$ and $x_2$. If there is an overlap between the two automata, it would be possible for both processes $\mathbf{P_1}$ and $\mathbf{P_2}$ to be in the critical state without failing a property test. This means, if the overlap is \underline{not} the empty set, then the Bakers Algorithm has a fault.
